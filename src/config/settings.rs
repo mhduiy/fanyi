@@ -41,7 +41,7 @@ pub struct ProxyConfig {
     pub https_proxy: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ProxyMode {
     Auto,   // 自动检测环境变量

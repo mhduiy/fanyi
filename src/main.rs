@@ -58,6 +58,13 @@ async fn run() -> Result<()> {
         config.proxy.enabled = ProxyMode::Enable;
     }
 
+    // 如果禁用代理，清除代理相关环境变量，防止 reqwest 自动读取
+    if config.proxy.enabled == ProxyMode::Disable {
+        for key in &["http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY"] {
+            std::env::remove_var(key);
+        }
+    }
+
     // 验证配置
     if let Err(e) = config.validate() {
         display_error(&e.to_string(), enable_colors);
